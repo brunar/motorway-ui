@@ -1,33 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
+import React, { lazy, Suspense } from 'react';
+import { Route, Switch, withRouter, Redirect, NavLink } from 'react-router-dom';
+import './App.scss';
+
+const Heros = lazy(() => import('./containers/Heros'));
+const Profile = lazy(() => import('./containers/Profile/Profile'));
 
 const App = () => {
-  const [images, setImages] = useState();
-
-  useEffect(() => {
-    fetch('http://localhost:3001/images?limit=10')
-      .then(res => res.json())
-      .then(data => {
-        console.log('Success:', data);
-        setImages(data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }, []);
-
+  let routes = (
+    <Switch>
+      <Suspense fallback={<p>Loading Components Route....</p>}>
+        <Route path="/profile" render={props => <Profile {...props} />} />
+        <Route path="/" exact render={props => <Heros {...props} />} />
+        <Redirect to="/" />
+      </Suspense>
+    </Switch>
+  );
   return (
-    <div className='app'>
-      {
-        images && images.map(img => (
-          <div key={img.id} >
-            <img src={img.url} alt=''/>
-            <img src={img.user.profile_image} alt=''/>
-          </div>
-        ))
-      }
+    <div>
+      <header className="Header">
+        <NavLink to="/profile" exact className="Links" activeClassName="active">Profile</NavLink>
+        <NavLink to="/" exact className="Links" activeClassName="active">Heros</NavLink>
+      </header>
+      {routes}
     </div>
   );
 }
 
-export default App;
+export default withRouter(App);

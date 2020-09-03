@@ -1,0 +1,20 @@
+.Heros {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #ececec;
+    padding: 3rem;
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+@media (min-width: 800px) {
+    .Heros {
+        flex-direction: column;
+    }
+}
