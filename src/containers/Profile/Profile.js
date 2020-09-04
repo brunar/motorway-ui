@@ -90,13 +90,19 @@ export default function ProfileForm() {
                         errorMsg={errors.name && 'Name is required'}
                     />
                     <Controls.Input
-                        refInput={register({ required: true })}
+                        refInput={register({
+                            required: "Email is required",
+                            pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: "Invalid email address"
+                            }
+                        })}
                         name="email"
                         label="Email"
                         value={formValues.email}
                         onChange={handleInputChange}
                         error={errors.email}
-                        errorMsg={errors.email && 'Email is required'}
+                        errorMsg={errors.email && errors.email.message}
                     />
                     <Controls.Input
                         refInput={register({ required: true })}
