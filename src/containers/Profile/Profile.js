@@ -81,13 +81,19 @@ export default function ProfileForm() {
                 <h1>Profile</h1>
                 <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                     <Controls.Input
-                        refInput={register({ required: true })}
+                        refInput={register({
+                            required: "Name is required",
+                            pattern: {
+                                value: /^[A-Za-z]+$/i,
+                                message: "Invalid character"
+                            }
+                        })}
                         name="name"
                         label="Name"
                         value={formValues.name}
                         onChange={handleInputChange}
                         error={errors.name}
-                        errorMsg={errors.name && 'Name is required'}
+                        errorMsg={errors.name && errors.name.message}
                     />
                     <Controls.Input
                         refInput={register({
@@ -105,13 +111,19 @@ export default function ProfileForm() {
                         errorMsg={errors.email && errors.email.message}
                     />
                     <Controls.Input
-                        refInput={register({ required: true })}
+                        refInput={register({
+                            required: "Please enter your favorite color",
+                            minLength: {
+                                value: 3,
+                                message: "Minimum 3 length"
+                            }
+                        })}
                         name="favoriteColor"
                         label="Favorite Color"
                         value={formValues.favoriteColor}
                         onChange={handleInputChange}
                         error={errors.favoriteColor}
-                        errorMsg={errors.favoriteColor && 'Favorite color is required'}
+                        errorMsg={errors.favoriteColor && errors.favoriteColor.message}
                     />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Controller
