@@ -15,7 +15,7 @@ const initialForm = {
     name: '',
     email: '',
     //dateBirth: new Date(),
-    favotiteColor: '',
+    favoriteColor: '',
 }
 
 
@@ -80,19 +80,24 @@ export default function ProfileForm() {
             <div className="Wrapper">
                 <h1>Profile</h1>
                 <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+
                     <Controls.Input
                         refInput={register({
                             required: "Name is required",
                             pattern: {
                                 value: /^[A-Za-z]+$/i,
                                 message: "Invalid character"
+                            },
+                            maxLength: {
+                                value: 15,
+                                message: "Maximum 15 length"
                             }
                         })}
                         name="name"
                         label="Name"
                         value={formValues.name}
                         onChange={handleInputChange}
-                        error={errors.name}
+                        error={!!errors.name}
                         errorMsg={errors.name && errors.name.message}
                     />
                     <Controls.Input
@@ -101,13 +106,17 @@ export default function ProfileForm() {
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                                 message: "Invalid email address"
+                            },
+                            maxLength: {
+                                value: 20,
+                                message: "Maximum 20 length"
                             }
                         })}
                         name="email"
                         label="Email"
                         value={formValues.email}
                         onChange={handleInputChange}
-                        error={errors.email}
+                        error={!!errors.email}
                         errorMsg={errors.email && errors.email.message}
                     />
                     <Controls.Input
@@ -116,13 +125,17 @@ export default function ProfileForm() {
                             minLength: {
                                 value: 3,
                                 message: "Minimum 3 length"
+                            },
+                            maxLength: {
+                                value: 8,
+                                message: "Maximum 8 length"
                             }
                         })}
                         name="favoriteColor"
                         label="Favorite Color"
                         value={formValues.favoriteColor}
                         onChange={handleInputChange}
-                        error={errors.favoriteColor}
+                        error={!!errors.favoriteColor}
                         errorMsg={errors.favoriteColor && errors.favoriteColor.message}
                     />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
